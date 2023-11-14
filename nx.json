@@ -13,8 +13,7 @@
   "defaultProject": "docs",
   "generators": {
     "@nx/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "unitTestRunner": "jest"
     },
     "@nx/angular:library": {
       "unitTestRunner": "jest"
