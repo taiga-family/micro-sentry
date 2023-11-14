@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getFetchMethod(fetchArgs: any[] = []): string {
   if (
     'Request' in window &&
@@ -14,6 +15,7 @@ export function getFetchMethod(fetchArgs: any[] = []): string {
   return 'GET';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getFetchUrl(fetchArgs: any[] = []): string {
   if (typeof fetchArgs[0] === 'string') {
     return fetchArgs[0];

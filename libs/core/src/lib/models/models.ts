@@ -19,14 +19,14 @@ export type DSN = [string, string, string, string, string, string];
 
 export type Tags = Partial<{ [key: string]: string }>;
 
-export type Extras = Partial<{ [key: string]: any }>;
+export type Extras = Partial<{ [key: string]: unknown }>;
 
 export interface User {
   id?: string;
   ip_address?: string;
   email?: string;
   username?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface SentryRequestBody {

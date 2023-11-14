@@ -10,17 +10,17 @@ import { MICRO_SENTRY_ERRORS_THROTTLE } from '../tokens/errors-throttle';
 
 @Injectable({ providedIn: 'root' })
 export class MicroSentryErrorBusService
-  implements NextObserver<any>, OnDestroy
+  implements NextObserver<unknown>, OnDestroy
 {
-  private _errors$ = new Subject<any>();
-  errors$: Observable<any>;
+  private _errors$ = new Subject<unknown>();
+  errors$: Observable<unknown>;
 
   constructor(
     @Inject(MICRO_SENTRY_ERRORS_THROTTLE)
-    private throttle: MonoTypeOperatorFunction<any>
+    private throttle: MonoTypeOperatorFunction<unknown>
   ) {
     this.errors$ = this._errors$.pipe(
-      groupBy((error) => error.toString()),
+      groupBy((error) => error?.toString()),
       mergeMap((group) => group.pipe(this.throttle))
     );
   }
@@ -29,7 +29,7 @@ export class MicroSentryErrorBusService
     this._errors$.complete();
   }
 
-  next(error: any): void {
+  next(error: unknown): void {
     this._errors$.next(error);
   }
 }

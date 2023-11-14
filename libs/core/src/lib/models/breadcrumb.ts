@@ -6,6 +6,6 @@ export interface Breadcrumb {
   event_id?: string;
   category?: string;
   message?: string;
-  data?: { [key: string]: any };
+  data?: { [key: string]: unknown };
   timestamp?: number;
 }
