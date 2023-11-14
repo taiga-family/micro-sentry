@@ -1,4 +1,5 @@
 // @for-internal-use
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { SentryException, SentryFrame } from '../models/models';
 import {

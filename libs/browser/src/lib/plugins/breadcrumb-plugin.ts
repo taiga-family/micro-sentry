@@ -34,7 +34,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     const xhrproto = XMLHttpRequest.prototype;
 
     fill(xhrproto, 'open', (originalOpen) => {
-      return function (...args: any[]): void {
+      return function (...args: unknown[]): void {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -80,7 +80,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
           typeof xhr.onreadystatechange === 'function'
         ) {
           fill(xhr, 'onreadystatechange', (original) => {
-            return function onreadystatechange(...readyStateArgs: any[]) {
+            return function onreadystatechange(...readyStateArgs: unknown[]) {
               onreadystatechangeHandler();
               original.apply(xhr, readyStateArgs);
             };
@@ -96,7 +96,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     });
 
     fill(xhrproto, 'send', (originalSend) => {
-      return function send(...args: any[]): void {
+      return function send(...args: unknown[]): void {
         self.xhrBreadcrumb({
           args,
           startTimestamp: Date.now(),
@@ -120,8 +120,8 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
 
     window.onpopstate = function (
       this: WindowEventHandlers,
-      ...args: any[]
-    ): any {
+      ...args: unknown[]
+    ): unknown {
       const to = window.location.href;
       // keep track of the current URL state, as we always receive only the updated state
       const from = self.lastHref;
@@ -140,7 +140,9 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     };
 
     /** @hidden */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function historyReplacementFunction(originalHistoryFunction: any): any {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return function (this: History, ...args: any[]): void {
         const url = args.length > 2 ? args[2] : undefined;
 
@@ -216,6 +218,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     }
 
     fill(window, 'fetch', (originalFetch) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (...args: [any]) => {
         const commonHandlerData = {
           args,
@@ -254,6 +257,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private fetchBreadcrumb(handlerData: { [key: string]: any }): void {
     // We only capture complete fetch requests
     if (!handlerData.endTimestamp) {
@@ -287,6 +291,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private xhrBreadcrumb(handlerData: { [key: string]: any }): void {
     if (handlerData.endTimestamp) {
       // We only capture complete, non-sentry requests
@@ -312,7 +317,9 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
         return;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       fill(window.console, level, (originalConsoleLevel: () => any) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (...args: any[]) => {
           // {args, level};
 
@@ -363,7 +370,7 @@ export class BreadcrumbPlugin implements MicroSentryPlugin {
     });
   }
 
-  private historyBreadcrumb(handlerData: { [key: string]: any }): void {
+  private historyBreadcrumb(handlerData: { from?: string; to?: string }): void {
     let from = handlerData.from;
     let to = handlerData.to;
     const parsedLoc = parseUrl(window.location.href);

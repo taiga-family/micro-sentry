@@ -5,6 +5,6 @@ export interface MicroSentryPlugin {
   destroy?(): void;
 }
 
-export interface MicroSentryPluginConstructor extends Function {
+export interface MicroSentryPluginConstructor {
   new (client: BrowserMicroSentryClient): MicroSentryPlugin;
 }

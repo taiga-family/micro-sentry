@@ -249,6 +249,7 @@ describe('BrowserMicroSentryClient', () => {
     beforeAll(() => {
       sendSpy = jest.spyOn(
         // смотрим за супер Methodом, что бы отлавливать мутации в Methodе дочернего класса
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (client.constructor as any).__proto__.prototype,
         'send'
       );

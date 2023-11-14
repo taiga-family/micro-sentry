@@ -8,13 +8,12 @@ export class MicroSentryErrorHandler implements ErrorHandler {
     private errorBus: MicroSentryErrorBusService,
     microSentry: MicroSentryService
   ) {
-    // tslint:disable-next-line:rxjs-prefer-angular-takeuntil
     errorBus.errors$.subscribe((error) => {
-      microSentry.report(error);
+      microSentry.report(error as Error);
     });
   }
 
-  handleError(error: any): void {
+  handleError(error: unknown): void {
     this.errorBus.next(error);
 
     console.error(error);

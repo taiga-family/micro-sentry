@@ -1,4 +1,4 @@
-export function parseUrl(url: string): {
+export function parseUrl(url: string | undefined): {
   host?: string;
   path?: string;
   protocol?: string;
