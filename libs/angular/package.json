@@ -26,8 +26,8 @@
     "Igor Katsuba <katsuba.igor@gmail.ru>",
     "Roman Sedov <79601794011@ya.ru>"
   ],
-  "repository": "https://github.com/TinkoffCreditSystems/micro-sentry",
-  "homepage": "https://github.com/TinkoffCreditSystems/micro-sentry",
+  "repository": "https://github.com/taiga-family/micro-sentry",
+  "homepage": "https://github.com/taiga-family/micro-sentry",
   "publishConfig": {
     "access": "public"
   }
