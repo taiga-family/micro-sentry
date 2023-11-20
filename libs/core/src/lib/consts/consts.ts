@@ -13,7 +13,7 @@ export const WINJS_REGEXP =
 export const UNKNOWN_FUNCTION = '?';
 export const AUTH_HEADER = 'X-Sentry-Auth';
 
-//                          |protocol     |public |secret      |host      |port       |projectId
-//                          |             |       |            |          |           |
 export const DSN_REGEXP =
-  /^(?:(\w+):)\/\/(?:(\w+)(?::(\w+))?@)([\w.-]+)(?::(\d+))?\/(.+)/;
+  //|protocol     |public    |secret      |host    |port       |projectId
+  //|
+  /^(?:(\w+):)\/\/(?:([\w-]+)(?::(\w+))?@)([\w.-]+)(?::(\d+))?\/(.+)/;

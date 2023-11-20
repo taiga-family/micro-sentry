@@ -29,6 +29,22 @@ describe('MiniSentryClient', () => {
     );
   });
 
+  it('should extract sentry_key for key with hypen', () => {
+    dsn = 'https://public-with_hypen@subdomain.domain.io/123';
+    client = new MicroSentryClient({ dsn });
+
+    expect(client.authHeader).toEqual(
+      'Sentry sentry_version=7,sentry_key=public-with_hypen'
+    );
+  });
+
+  it('should create api url for key with hypen', () => {
+    dsn = 'https://public-with_hypen@subdomain.domain.io/123';
+    client = new MicroSentryClient({ dsn });
+
+    expect(client.apiUrl).toEqual('https://subdomain.domain.io/api/123/store/');
+  });
+
   it('payload to send to Sentry is correct', () => {
     expect(
       client.prepare({ name: 'Error', message: 'error message', stack: '' })
