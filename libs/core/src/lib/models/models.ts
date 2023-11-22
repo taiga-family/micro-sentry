@@ -37,6 +37,7 @@ export interface SentryRequestBody {
     version: string;
   };
   timestamp: number;
+  event_id: string;
   request?: {
     url?: string;
     headers?: {

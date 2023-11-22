@@ -2,6 +2,7 @@ import { SentryRequestBody } from '../models/models';
 import { AUTH_HEADER, DSN_REGEXP } from '../consts/consts';
 import { computeStackTrace } from '../helpers/compute-stack-trace';
 import { SentryClientOptions } from '../models/sentry-client-options';
+import { uuid4 } from '../helpers/uuid4';
 
 export class MicroSentryClient {
   readonly authHeader?: string;
@@ -65,6 +66,7 @@ export class MicroSentryClient {
   protected getRequestBlank(): SentryRequestBody {
     return {
       platform: 'javascript',
+      event_id: uuid4(),
       sdk: {
         name: 'micro-sentry.javascript.core',
         version: '0.0.0',

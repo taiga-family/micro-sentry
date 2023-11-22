@@ -66,6 +66,7 @@ describe('MiniSentryClient', () => {
         version: expect.any(String),
       },
       timestamp: expect.any(Number),
+      event_id: expect.any(String),
     });
   });
 });
