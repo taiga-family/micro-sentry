@@ -58,12 +58,14 @@ import { MicroSentryModule } from '@micro-sentry/angular';
 
 @NgModule({
   imports: [
-    // option 1: via provide
-    provideMicroSentry({
+    // options 1: via module
+    MicroSentryModule.forRoot({
       dsn: 'https://kj12kj1n23@sentry.domain.com/123',
     }),
-    // options 2: via module
-    MicroSentryModule.forRoot({
+  ],
+  providers: [
+    // option 2: via provide
+    provideMicroSentry({
       dsn: 'https://kj12kj1n23@sentry.domain.com/123',
     }),
   ],
