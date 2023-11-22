@@ -1,8 +1,7 @@
-import { ErrorHandler, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { BrowserSentryClientOptions } from '@micro-sentry/browser';
-import { MICRO_SENTRY_CONFIG } from '../tokens/config';
-import { MicroSentryErrorHandler } from '../services/error-handler.service';
+import { provideMicroSentry } from '../provide-micro-sentry';
 
 @NgModule({
   declarations: [],
@@ -14,16 +13,7 @@ export class MicroSentryModule {
   ): ModuleWithProviders<MicroSentryModule> {
     return {
       ngModule: MicroSentryModule,
-      providers: [
-        {
-          provide: ErrorHandler,
-          useExisting: MicroSentryErrorHandler,
-        },
-        {
-          provide: MICRO_SENTRY_CONFIG,
-          useValue: config,
-        },
-      ],
+      providers: provideMicroSentry(config),
     };
   }
 }

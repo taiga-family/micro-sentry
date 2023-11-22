@@ -37,13 +37,32 @@ npm i @micro-sentry/browser
 
 ### Angular
 
-Just add it into `app.module.ts` of your application:
+You can use provide api in standalone applications:
+
+```typescript
+import { provideMicroSentry } from '@micro-sentry/angular';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideMicroSentry({
+      dsn: 'https://kj12kj1n23@sentry.domain.com/123',
+    }),
+  ],
+});
+```
+
+Or add it into `app.module.ts` of your application:
 
 ```typescript
 import { MicroSentryModule } from '@micro-sentry/angular';
 
 @NgModule({
   imports: [
+    // option 1: via provide
+    provideMicroSentry({
+      dsn: 'https://kj12kj1n23@sentry.domain.com/123',
+    }),
+    // options 2: via module
     MicroSentryModule.forRoot({
       dsn: 'https://kj12kj1n23@sentry.domain.com/123',
     }),
