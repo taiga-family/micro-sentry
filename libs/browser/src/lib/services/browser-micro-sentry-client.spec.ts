@@ -286,6 +286,7 @@ describe('BrowserMicroSentryClient', () => {
         },
         tags: { tag: 'value' },
         timestamp: expect.any(Number),
+        event_id: expect.any(String),
       });
     });
 
@@ -309,6 +310,7 @@ describe('BrowserMicroSentryClient', () => {
         },
         tags: { tag: 'value' },
         timestamp: expect.any(Number),
+        event_id: expect.any(String),
       });
     });
   });
