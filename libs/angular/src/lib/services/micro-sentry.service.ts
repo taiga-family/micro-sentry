@@ -5,9 +5,8 @@ import {
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { SentryRequestBody } from '@micro-sentry/core';
 import { MICRO_SENTRY_CONFIG } from '../tokens/config';
-import { WINDOW } from '@ng-web-apis/common';
+import { DOCUMENT } from '@angular/common';
 
-// @dynamic
 @Injectable({ providedIn: 'root' })
 export class MicroSentryService
   extends BrowserMicroSentryClient
@@ -15,9 +14,9 @@ export class MicroSentryService
 {
   constructor(
     @Inject(MICRO_SENTRY_CONFIG) config: BrowserSentryClientOptions,
-    @Inject(WINDOW) window: Window
+    @Inject(DOCUMENT) document: Document
   ) {
-    super(config, window);
+    super(config, document?.defaultView ?? undefined);
   }
 
   protected override getRequestBlank(): SentryRequestBody {
