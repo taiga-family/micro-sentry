@@ -126,7 +126,7 @@ try {
             </div>
         </td>
         <td align="center">
-            <a href="http://marsibarsi.me"
+            <a href="https://twitter.com/marsibarsi"
                 ><img
                     src="https://github.com/marsibarsi.png?size=100"
                     width="100"
