@@ -1,0 +1,33 @@
+{
+  "name": "@micro-sentry/breadcrumb-plugin",
+  "version": "0.0.0-development",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@micro-sentry/browser": "0.0.0-development"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "monitoring",
+    "errors",
+    "sentry",
+    "log",
+    "angular"
+  ],
+  "authors": [
+    "Igor Katsuba <katsuba.igor@gmail.ru>",
+    "Roman Sedov <79601794011@ya.ru>",
+    "Vsevolod Arutyunov <sevaru@inbox.ru>"
+  ],
+  "contributors": [
+    "Igor Katsuba <katsuba.igor@gmail.ru>",
+    "Roman Sedov <79601794011@ya.ru>",
+    "Vsevolod Arutyunov <sevaru@inbox.ru>"
+  ],
+  "repository": "https://github.com/taiga-family/micro-sentry",
+  "homepage": "https://github.com/taiga-family/micro-sentry",
+  "publishConfig": {
+    "access": "public"
+  }
+}

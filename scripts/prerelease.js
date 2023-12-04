@@ -1,7 +1,8 @@
+const { dir } = require('console');
 const fs = require('fs');
 
-const DIST_LIB_PATH = '/common/';
 const README_PATH = 'README.md';
+const DIRS = fs.readdirSync('libs');
 
 copyExtraFiles();
 
@@ -9,9 +10,10 @@ function copyExtraFiles() {
   if (!fs.existsSync(README_PATH)) {
     throw new Error('README do not exit');
   } else {
-    copyReadmeIntoLibFolder(README_PATH, 'core');
-    copyReadmeIntoLibFolder(README_PATH, 'browser');
-    copyReadmeIntoLibFolder(README_PATH, 'angular');
+    DIRS.forEach((dir) => {
+      console.log(dir);
+      copyReadmeIntoLibFolder(README_PATH, dir);
+    });
   }
 }
 
