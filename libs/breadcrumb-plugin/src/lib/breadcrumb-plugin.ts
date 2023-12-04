@@ -1,15 +1,17 @@
-import { MicroSentryPlugin } from '../models/plugin';
-import { BrowserMicroSentryClient } from '../services/browser-micro-sentry-client';
-import { fill } from '../utils/fill';
+import {
+  BrowserMicroSentryClient,
+  MicroSentryPlugin,
+} from '@micro-sentry/browser';
 import { Severity } from '@micro-sentry/core';
-import { parseUrl } from '../utils/parse-url';
+import { fill } from './utils/fill';
+import { htmlTreeAsString } from './utils/html-tree-as-path';
 import {
   getFetchMethod,
   getFetchUrl,
   supportsNativeFetch,
-} from '../utils/fetch-utils';
-import { htmlTreeAsString } from '../utils/html-tree-as-path';
-import { safeJoin } from '../utils/safe-join';
+} from './utils/fetch-utils';
+import { safeJoin } from './utils/safe-join';
+import { parseUrl } from './utils/parse-url';
 
 export class BreadcrumbPlugin implements MicroSentryPlugin {
   private subscriptions: (() => void)[] = [];

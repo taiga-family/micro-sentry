@@ -18,6 +18,9 @@
     "strict": true,
     "paths": {
       "@micro-sentry/angular": ["libs/angular/src/index.ts"],
+      "@micro-sentry/breadcrumb-plugin": [
+        "libs/breadcrumb-plugin/src/index.ts"
+      ],
       "@micro-sentry/browser": ["libs/browser/src/index.ts"],
       "@micro-sentry/core": ["libs/core/src/index.ts"]
     }

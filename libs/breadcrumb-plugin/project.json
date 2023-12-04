@@ -1,0 +1,67 @@
+{
+  "name": "breadcrumb-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/breadcrumb-plugin/src",
+  "prefix": "micro-sentry",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/breadcrumb-plugin/tsconfig.lib.json",
+        "project": "libs/breadcrumb-plugin/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/breadcrumb-plugin/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/breadcrumb-plugin/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/breadcrumb-plugin/jest.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/breadcrumb-plugin"]
+    },
+    "semrel": {
+      "executor": "@ng-builders/semrel:release",
+      "options": {
+        "npm": {
+          "pkgRoot": "dist/libs/breadcrumb-plugin"
+        },
+        "branches": [
+          "+([0-9])?(.{+([0-9]),x}).x",
+          "main",
+          "next",
+          "next-major",
+          {
+            "name": "beta",
+            "prerelease": true
+          },
+          {
+            "name": "alpha",
+            "prerelease": true
+          }
+        ]
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx build breadcrumb-plugin --configuration production",
+          "nx semrel breadcrumb-plugin"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}
