@@ -1,13 +1,18 @@
 # micro-sentry
 
 [![npm version](https://img.shields.io/npm/v/@micro-sentry/angular.svg)](https://npmjs.com/package/@micro-sentry/angular)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@micro-sentry/core)](https://bundlephobia.com/result?p=@micro-sentry/core)
+
+[![@micro-sentry/core size](https://deno.bundlejs.com/?q=@micro-sentry%2Fcore&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@micro-sentry%2Fcore)
+
+[![@micro-sentry/browser size](https://deno.bundlejs.com/?q=@micro-sentry%2Fbrowser&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@micro-sentry%2Fbrowser)
+
+[![@micro-sentry/angular size](https://deno.bundlejs.com/?q=@micro-sentry%2Fangular&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@micro-sentry%2Fangular)
 
 **@micro-sentry** is a tiny sentry client to monitor your applications without raising your bundle size.
 
 ## Why is it better than default sentry client?
 
-👜 **It is small**. So, it is at most [1.9 KB](https://bundlephobia.com/result?p=@micro-sentry/angular) size instead of [22.5 KB](https://bundlephobia.com/result?p=@sentry/angular) by default client but has all the essential functionality
+👜 **It is small**. So, it is at most [2.27 kB (gzip)](https://bundlejs.com/?q=%40micro-sentry%2Fbrowser) in size instead of default [85.1 kB (gzip)](https://bundlejs.com/?q=%40sentry%2Fbrowser), yet it retains all the the essential functionality.
 
 🛠 **It is easy to set up**. There is a lightweight wrapper for Angular and a browser tool for other frameworks or vanilla.
 
@@ -31,6 +36,13 @@ Other:
 
 ```
 npm i @micro-sentry/browser
+```
+
+> [!NOTE]
+> since version @micro-sentry/browser@7 breadcrumbs-plugin is a separate package
+
+```
+npm i @micro-sentry/breadcrumbs-plugin
 ```
 
 ## How to set up
