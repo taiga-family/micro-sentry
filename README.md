@@ -2,11 +2,11 @@
 
 [![npm version](https://img.shields.io/npm/v/@micro-sentry/angular.svg)](https://npmjs.com/package/@micro-sentry/angular)
 
-[![@micro-sentry/core size](https://deno.bundlejs.com/?q=@micro-sentry%2Fcore&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@micro-sentry%2Fcore)
+[![@micro-sentry/core size](https://deno.bundlejs.com/?q=@micro-sentry/core&badge=detailed)](https://bundlejs.com/?q=@micro-sentry%2Fcore)
 
-[![@micro-sentry/browser size](https://deno.bundlejs.com/?q=@micro-sentry%2Fbrowser&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@micro-sentry%2Fbrowser)
+[![@micro-sentry/browser size](https://deno.bundlejs.com/?q=@micro-sentry/browser&badge=detailed)](https://bundlejs.com/?q=@micro-sentry/browser)
 
-[![@micro-sentry/angular size](https://deno.bundlejs.com/?q=@micro-sentry%2Fangular&badge=detailed&badge-style=for-the-badge)](https://bundlejs.com/?q=@micro-sentry%2Fangular)
+[![@micro-sentry/angular size](https://deno.bundlejs.com/?q=@micro-sentry/angular&config={%22esbuild%22:{%22external%22:[%22@angular/core%22,%22@angular/common%22,%22tslib%22,%22rxjs%22]}}&badge=detailed)](https://bundlejs.com/?q=@micro-sentry/angular&config={%22esbuild%22:{%22external%22:[%22@angular/core%22,%22@angular/common%22,%22tslib%22,%22rxjs%22]}})
 
 **@micro-sentry** is a tiny sentry client to monitor your applications without raising your bundle size.
 
