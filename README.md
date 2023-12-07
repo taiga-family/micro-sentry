@@ -107,9 +107,9 @@ try {
 
 - 📤 **Send Errors with Stack Trace**
 - 📩 **Send Messages**
-- 🚫 **Ignore URLs | Errors**: with strings or RegExps
-- 🍞 **Breadcrumbs plugin**: Track and manage the sequence of events leading up to an error for comprehensive debugging.
-- 🌟 **Enrich Errors with Tags, User, Context**: Augment error reports with additional context, user information, and tags for deeper insights.
+- 🚫 **Ignore URLs | Errors**: With strings or RegExps
+- 🍞 **Breadcrumbs plugin**: Track and manage the sequence of events leading up to an error for comprehensive debugging
+- 🌟 **Enrich Errors with Tags, User, Context**: Augment error reports with additional context, user information, and tags for deeper insights
 
 This list encapsulates the key functionalities supported by micro-sentry, emphasizing its focus on essential error tracking and management.
 
