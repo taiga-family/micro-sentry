@@ -1,40 +1,40 @@
 {
-  "name": "breadcrumb-plugin",
+  "name": "breadcrumbs-plugin",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/breadcrumb-plugin/src",
+  "sourceRoot": "libs/breadcrumbs-plugin/src",
   "prefix": "micro-sentry",
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
       "options": {
-        "tsConfig": "libs/breadcrumb-plugin/tsconfig.lib.json",
-        "project": "libs/breadcrumb-plugin/ng-package.json"
+        "tsConfig": "libs/breadcrumbs-plugin/tsconfig.lib.json",
+        "project": "libs/breadcrumbs-plugin/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/breadcrumb-plugin/tsconfig.lib.prod.json"
+          "tsConfig": "libs/breadcrumbs-plugin/tsconfig.lib.prod.json"
         }
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["libs/breadcrumb-plugin/src/**/*.ts"]
+        "lintFilePatterns": ["libs/breadcrumbs-plugin/src/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/breadcrumb-plugin/jest.config.ts"
+        "jestConfig": "libs/breadcrumbs-plugin/jest.config.ts"
       },
-      "outputs": ["{workspaceRoot}/coverage/libs/breadcrumb-plugin"]
+      "outputs": ["{workspaceRoot}/coverage/libs/breadcrumbs-plugin"]
     },
     "semrel": {
       "executor": "@ng-builders/semrel:release",
       "options": {
         "npm": {
-          "pkgRoot": "dist/libs/breadcrumb-plugin"
+          "pkgRoot": "dist/libs/breadcrumbs-plugin"
         },
         "branches": [
           "+([0-9])?(.{+([0-9]),x}).x",
@@ -56,8 +56,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "nx build breadcrumb-plugin --configuration production",
-          "nx semrel breadcrumb-plugin"
+          "nx build breadcrumbs-plugin --configuration production",
+          "nx semrel breadcrumbs-plugin"
         ],
         "parallel": false
       }

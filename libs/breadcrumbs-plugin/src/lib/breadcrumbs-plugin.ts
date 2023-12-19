@@ -13,7 +13,7 @@ import {
 import { safeJoin } from './utils/safe-join';
 import { parseUrl } from './utils/parse-url';
 
-export class BreadcrumbPlugin implements MicroSentryPlugin {
+export class BreadcrumbsPlugin implements MicroSentryPlugin {
   private subscriptions: (() => void)[] = [];
   private lastHref?: string;
 

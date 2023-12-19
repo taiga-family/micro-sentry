@@ -1,11 +1,11 @@
 {
-  "name": "@micro-sentry/breadcrumb-plugin",
+  "name": "@micro-sentry/breadcrumbs-plugin",
   "version": "0.0.0-development",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@micro-sentry/browser": "0.0.0-development"
+    "@micro-sentry/browser": "^7.0.0"
   },
   "license": "Apache-2.0",
   "keywords": [
@@ -13,7 +13,8 @@
     "errors",
     "sentry",
     "log",
-    "angular"
+    "angular",
+    "breadcrumbs"
   ],
   "authors": [
     "Igor Katsuba <katsuba.igor@gmail.ru>",

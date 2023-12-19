@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'breadcrumb-plugin',
+  displayName: 'breadcrumbs-plugin',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
