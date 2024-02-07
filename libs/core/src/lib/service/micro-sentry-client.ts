@@ -36,10 +36,14 @@ export class MicroSentryClient {
   }
 
   prepare(error: Error): SentryRequestBody {
-    return {
+    const prepared: SentryRequestBody = {
       ...this.getRequestBlank(),
       exception: { values: [computeStackTrace(error)] },
     };
+    prepared.extra ||= {};
+    prepared.extra.cause ||= error.cause;
+    Object.assign(prepared.extra, error);
+    return prepared;
   }
 
   report(error: Error): void {
