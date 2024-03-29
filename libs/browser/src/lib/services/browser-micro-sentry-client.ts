@@ -186,7 +186,16 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
       return;
     }
 
-    super.send(this.beforeSend({ release: this.release, ...request }));
+    const beforeSendResult = this.beforeSend({
+      release: this.release,
+      ...request,
+    });
+
+    if (!beforeSendResult) {
+      return;
+    }
+
+    super.send(beforeSendResult);
 
     this.setBreadcrumbs(undefined);
   }
