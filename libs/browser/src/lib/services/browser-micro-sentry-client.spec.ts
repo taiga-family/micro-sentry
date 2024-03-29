@@ -245,43 +245,38 @@ describe('BrowserMicroSentryClient', () => {
 
   describe('beforeSend', () => {
     let sendSpy: jest.SpyInstance;
+    let beforeSendClient: BrowserMicroSentryClient;
 
     beforeAll(() => {
-      sendSpy = jest.spyOn(
-        // смотрим за супер Methodом, что бы отлавливать мутации в Methodе дочернего класса
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (client.constructor as any).__proto__.prototype,
-        'send'
-      );
-
-      client = new BrowserMicroSentryClient({
+      beforeSendClient = new BrowserMicroSentryClient({
         dsn: 'http://secret@exampl.dsn/2',
         release: '1.0.0',
         beforeSend: () => null,
       });
+
+      sendSpy = jest.spyOn(
+        // смотрим за супер Methodом, что бы отлавливать мутации в Methodе дочернего класса
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (beforeSendClient.constructor as any).__proto__.prototype,
+        'send'
+      );
     });
 
     it('Should not send data if beforeSend returns null', () => {
-      client.report({ message: 'Error', name: 'Error', stack: '' });
+      beforeSendClient.report({ message: 'Error', name: 'Error', stack: '' });
 
       expect(sendSpy).not.toHaveBeenCalled();
     });
 
     it('Should not clean breadcrumbs if beforeSend returns null', () => {
-      client = new BrowserMicroSentryClient({
-        dsn: 'http://secret@exampl.dsn/2',
-        release: '1.0.0',
-        beforeSend: () => null,
-      });
-
-      client.addBreadcrumb({
+      beforeSendClient.addBreadcrumb({
         event_id: 'id',
         type: 'console',
         level: Severity.critical,
       });
-      client.report({ message: 'Error', name: 'Error', stack: '' });
+      beforeSendClient.report({ message: 'Error', name: 'Error', stack: '' });
 
-      expect(client.state.breadcrumbs?.length).toBe(1);
+      expect(beforeSendClient.state.breadcrumbs?.length).toBe(1);
     });
   });
 
