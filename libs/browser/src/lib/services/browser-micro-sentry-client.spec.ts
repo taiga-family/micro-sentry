@@ -160,6 +160,14 @@ describe('BrowserMicroSentryClient', () => {
       });
     });
 
+    it('Should clear user on setUser(null)', () => {
+      client.setUser({ username: 'test' });
+
+      client.setUser(null);
+
+      expect(client.state.user).toBeUndefined();
+    });
+
     afterEach(() => {
       client.clearState();
     });
