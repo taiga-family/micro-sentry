@@ -90,8 +90,8 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
     return this;
   }
 
-  setUser(user: User): this {
-    this.setKeyState('user', { ...user });
+  setUser(user: User | null): this {
+    this.setKeyState('user', user ? { ...user } : undefined);
 
     return this;
   }
