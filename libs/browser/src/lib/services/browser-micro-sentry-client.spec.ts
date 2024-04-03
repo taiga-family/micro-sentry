@@ -205,6 +205,38 @@ describe('BrowserMicroSentryClient', () => {
       });
     });
 
+    it('should skip breadcrumbs if beforeBreadcrumb returns null', () => {
+      client = new BrowserMicroSentryClient({
+        dsn: 'http://secret@exampl.dsn/2',
+        release: '1.0.0',
+        beforeBreadcrumb: (breadcrumb) =>
+          breadcrumb.level === Severity.debug ? null : breadcrumb,
+      });
+
+      // NOTE: breadcrump to be ignored
+      client.addBreadcrumb({
+        event_id: 'id1',
+        type: 'console',
+        level: Severity.debug,
+      });
+
+      // NOTE: breadcrump to be added
+      client.addBreadcrumb({
+        event_id: 'id2',
+        type: 'console',
+        level: Severity.critical,
+      });
+
+      expect(client.state.breadcrumbs).toEqual([
+        {
+          event_id: 'id2',
+          type: 'console',
+          level: 'critical',
+          timestamp: expect.any(Number),
+        },
+      ]);
+    });
+
     afterAll(() => {
       client.clearState();
     });

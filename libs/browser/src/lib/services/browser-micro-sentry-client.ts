@@ -117,12 +117,18 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
     this.setBreadcrumbs(undefined);
   }
 
-  addBreadcrumb(breadcrumb: Breadcrumb) {
+  addBreadcrumb(breadcrumb: Breadcrumb): void {
+    const result = this.beforeBreadcrumb(breadcrumb);
+
+    if (!result) {
+      return;
+    }
+
     this.extendState({
       breadcrumbs: [
         {
           timestamp: Date.now() / 1_000,
-          ...this.beforeBreadcrumb(breadcrumb),
+          ...result,
         },
       ],
     });
