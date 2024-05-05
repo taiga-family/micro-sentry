@@ -335,6 +335,13 @@ describe('BrowserMicroSentryClient', () => {
     });
 
     it('Set data is in data to send', () => {
+      Object.defineProperty(window, 'location', {
+        value: new URL(
+          'https://example.com?env=development&auth=123&code=3212'
+        ),
+        configurable: true,
+      });
+
       client.report({ message: 'Error', name: 'Error', stack: '' });
 
       expect(sendSpy).toHaveBeenCalledWith({
@@ -356,6 +363,7 @@ describe('BrowserMicroSentryClient', () => {
             'User-Agent': expect.any(String),
           },
           url: expect.any(String),
+          query_string: 'env=development&auth=123&code=3212',
         },
         sdk: { name: 'micro-sentry.javascript.browser', version: '0.0.0' },
         extra: {
@@ -368,6 +376,10 @@ describe('BrowserMicroSentryClient', () => {
     });
 
     it('Message has correct fields and log level', () => {
+      Object.defineProperty(window, 'location', {
+        value: '/some/path?env=development&auth=123&code=3212',
+        configurable: true,
+      });
       client.captureMessage('Message', Severity.debug);
 
       expect(sendSpy).toHaveBeenCalledWith({
@@ -380,6 +392,7 @@ describe('BrowserMicroSentryClient', () => {
             'User-Agent': expect.any(String),
           },
           url: expect.any(String),
+          query_string: 'env=development&auth=123&code=3212',
         },
         sdk: { name: 'micro-sentry.javascript.browser', version: '0.0.0' },
         extra: {
