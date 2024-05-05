@@ -6,6 +6,7 @@ import {
   SentryRequestBody,
   Severity,
   Tags,
+  QueryString,
 } from '@micro-sentry/core';
 import { State } from '../models/state';
 import { MicroSentryPlugin } from '../models/plugin';
@@ -166,10 +167,33 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
     );
   }
 
+  extractQueryString(originalUrl: string): QueryString | undefined {
+    let url = originalUrl;
+
+    if (!url) {
+      return undefined;
+    }
+
+    if (url.startsWith('/')) {
+      url = `http://prefix${url}`;
+    }
+
+    try {
+      const queryString = new URL(url).search.slice(1);
+
+      return queryString.length ? queryString : undefined;
+    } catch (e) {
+      return undefined;
+    }
+  }
+
   protected override getRequestBlank(): SentryRequestBody {
+    const url = this.window.location.toString();
+
     return {
       request: {
-        url: this.window.location.toString(),
+        url,
+        query_string: this.extractQueryString(url),
         headers: {
           'User-Agent': this.window.navigator.userAgent,
         },

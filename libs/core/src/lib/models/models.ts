@@ -21,7 +21,10 @@ export type Tags = Partial<{ [key: string]: string }>;
 
 export type Extras = Partial<{ [key: string]: unknown }>;
 
-export type QueryParams = string | { [key: string]: string } | Array<[string, string]>;
+export type QueryString =
+  | string
+  | { [key: string]: string }
+  | Array<[string, string]>;
 
 export interface User {
   id?: string;
@@ -41,7 +44,7 @@ export interface SentryRequestBody {
   timestamp: number;
   event_id: string;
   request?: {
-    query_string?: QueryParams;
+    query_string?: QueryString;
     url?: string;
     headers?: {
       'User-Agent': string;
