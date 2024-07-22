@@ -12,12 +12,14 @@ import { State } from '../models/state';
 import { MicroSentryPlugin } from '../models/plugin';
 import { BrowserSentryClientOptions } from '../models/browser-sentry-client-options';
 import { isMatchingPattern } from '../utils/is-matching-pattern';
+import { MAX_BREADCRUMBS } from '../consts/max-breadcrumbs';
 
 function getWindow(): Window {
   return window;
 }
 
 export class BrowserMicroSentryClient extends MicroSentryClient {
+  private readonly breadcrumbsKeyName = 'breadcrumbs';
   private destroyed = false;
   private readonly plugins: MicroSentryPlugin[];
   private readonly beforeSend: NonNullable<
@@ -33,6 +35,7 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
     BrowserSentryClientOptions['ignoreErrors']
   >;
   private readonly release?: string;
+  private readonly maxBreadcrumbs: number;
 
   constructor(
     private options: BrowserSentryClientOptions,
@@ -47,7 +50,8 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
       blacklistUrls = [],
       ignoreErrors = [],
       release = undefined,
-    } = this.options || {};
+      maxBreadcrumbs = MAX_BREADCRUMBS,
+    } = this.options || {} || [];
 
     this.plugins = plugins.map((Plugin) => new Plugin(this));
     this.beforeSend = beforeSend;
@@ -55,6 +59,8 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
     this.blacklistUrls = blacklistUrls;
     this.ignoreErrors = ignoreErrors;
     this.release = release;
+    this.maxBreadcrumbs =
+      maxBreadcrumbs >= 0 ? maxBreadcrumbs : MAX_BREADCRUMBS;
   }
 
   protected _state: State = {};
@@ -126,13 +132,22 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
     }
 
     this.extendState({
-      breadcrumbs: [
+      [this.breadcrumbsKeyName]: [
         {
           timestamp: Date.now() / 1_000,
           ...result,
         },
       ],
     });
+
+    const breadcrumbs = this.getKeyState(this.breadcrumbsKeyName);
+
+    if (!!breadcrumbs && (breadcrumbs.length ?? 0) > this.maxBreadcrumbs) {
+      this.setKeyState(
+        this.breadcrumbsKeyName,
+        this.maxBreadcrumbs > 0 ? breadcrumbs.slice(-this.maxBreadcrumbs) : []
+      );
+    }
   }
 
   setBreadcrumbs(breadcrumbs: Breadcrumb[] | undefined) {
@@ -306,5 +321,9 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
 
   private setKeyState<T extends keyof State>(key: T, value: State[T]) {
     this._state[key] = value;
+  }
+
+  private getKeyState<T extends keyof State>(key: T): State[T] {
+    return this._state[key];
   }
 }

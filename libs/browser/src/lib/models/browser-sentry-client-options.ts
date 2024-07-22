@@ -12,4 +12,5 @@ export interface BrowserSentryClientOptions extends SentryClientOptions {
   ignoreErrors?: Array<string | RegExp>;
   blacklistUrls?: Array<string | RegExp>;
   release?: string;
+  maxBreadcrumbs?: number;
 }
