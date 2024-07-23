@@ -5,6 +5,12 @@ import { MAX_BREADCRUMBS } from '../consts/max-breadcrumbs';
 describe('BrowserMicroSentryClient', () => {
   let client: BrowserMicroSentryClient;
   const maxBreadcrumbs = 10;
+  const getBreadcrumbs = (amount: number) =>
+    [...Array(amount).keys()].map((index) => ({
+      event_id: `id${index}`,
+      type: 'console',
+      level: Severity.critical,
+    }));
 
   beforeAll(() => {
     client = new BrowserMicroSentryClient({
@@ -208,40 +214,41 @@ describe('BrowserMicroSentryClient', () => {
       });
     });
 
-    it('should limit breadcrumbs amount - with custom limit', () => {
-      for (let i = 0; i < maxBreadcrumbs + 2; i++) {
-        client.addBreadcrumb({
-          event_id: `id${i}`,
-          type: 'console',
-          level: Severity.critical,
-        });
-      }
+    it('should limit breadcrumbs amount - with custom limit; incremental addition', () => {
+      getBreadcrumbs(maxBreadcrumbs + 2).forEach((bc) =>
+        client.addBreadcrumb(bc)
+      );
 
       expect(client.state.breadcrumbs?.length).toBe(maxBreadcrumbs);
     });
 
-    it('should limit breadcrumbs amount - with default limit', () => {
+    it('should limit breadcrumbs amount - with custom limit; all at once', () => {
+      client.setBreadcrumbs(getBreadcrumbs(maxBreadcrumbs + 2));
+
+      expect(client.state.breadcrumbs?.length).toBe(maxBreadcrumbs);
+    });
+
+    it('should limit breadcrumbs amount - with default limit; incremental addition', () => {
       const anotherClient = new BrowserMicroSentryClient({});
 
-      for (let i = 0; i < MAX_BREADCRUMBS + 2; i++) {
-        anotherClient.addBreadcrumb({
-          event_id: `id${i}`,
-          type: 'console',
-          level: Severity.critical,
-        });
-      }
+      getBreadcrumbs(MAX_BREADCRUMBS + 2).forEach((bc) =>
+        anotherClient.addBreadcrumb(bc)
+      );
 
       expect(anotherClient.state.breadcrumbs?.length).toBe(MAX_BREADCRUMBS);
     });
 
-    it('should save only last breadcrumbs', () => {
-      for (let i = 0; i < maxBreadcrumbs + 2; i++) {
-        client.addBreadcrumb({
-          event_id: `id${i}`,
-          type: 'console',
-          level: Severity.critical,
-        });
-      }
+    it('should limit breadcrumbs amount - with default limit; all at once', () => {
+      const anotherClient = new BrowserMicroSentryClient({});
+      anotherClient.setBreadcrumbs(getBreadcrumbs(MAX_BREADCRUMBS + 2));
+
+      expect(anotherClient.state.breadcrumbs?.length).toBe(MAX_BREADCRUMBS);
+    });
+
+    it('should save only last breadcrumbs; incremental addition', () => {
+      getBreadcrumbs(maxBreadcrumbs + 2).forEach((bc) =>
+        client.addBreadcrumb(bc)
+      );
 
       expect(
         (client.state.breadcrumbs ?? [])
@@ -250,30 +257,50 @@ describe('BrowserMicroSentryClient', () => {
       ).toEqual('id2,id3,id4,id5,id6,id7,id8,id9,id10,id11');
     });
 
-    it('should not add breadcrumbs at all if maxBreadcrumbs is set to 0', () => {
+    it('should save only last breadcrumbs; all at once', () => {
+      client.setBreadcrumbs(getBreadcrumbs(maxBreadcrumbs + 2));
+
+      expect(
+        (client.state.breadcrumbs ?? [])
+          .map((breadcrumb) => breadcrumb.event_id)
+          .join(',')
+      ).toEqual('id2,id3,id4,id5,id6,id7,id8,id9,id10,id11');
+    });
+
+    it('should not add breadcrumbs at all if maxBreadcrumbs is set to 0; incremental addition', () => {
       const anotherClient = new BrowserMicroSentryClient({ maxBreadcrumbs: 0 });
 
-      anotherClient.addBreadcrumb({
-        event_id: 'id',
-        type: 'console',
-        level: Severity.critical,
-      });
+      getBreadcrumbs(1).forEach((bc) => anotherClient.addBreadcrumb(bc));
 
       expect(anotherClient.state.breadcrumbs?.length).toBe(0);
     });
 
-    it('should ignore maxBreadcrumbs option if maxBreadcrumbs is a negative number', () => {
+    it('should not add breadcrumbs at all if maxBreadcrumbs is set to 0; all at once', () => {
+      const anotherClient = new BrowserMicroSentryClient({ maxBreadcrumbs: 0 });
+
+      anotherClient.setBreadcrumbs(getBreadcrumbs(1));
+
+      expect(anotherClient.state.breadcrumbs?.length).toBe(0);
+    });
+
+    it('should ignore maxBreadcrumbs option if maxBreadcrumbs is a negative number; incremental addition', () => {
       const anotherClient = new BrowserMicroSentryClient({
         maxBreadcrumbs: -100,
       });
 
-      for (let i = 0; i < MAX_BREADCRUMBS + 2; i++) {
-        anotherClient.addBreadcrumb({
-          event_id: `id${i}`,
-          type: 'console',
-          level: Severity.critical,
-        });
-      }
+      getBreadcrumbs(MAX_BREADCRUMBS + 2).forEach((bc) =>
+        anotherClient.addBreadcrumb(bc)
+      );
+
+      expect(anotherClient.state.breadcrumbs?.length).toBe(MAX_BREADCRUMBS);
+    });
+
+    it('should ignore maxBreadcrumbs option if maxBreadcrumbs is a negative number; all at once', () => {
+      const anotherClient = new BrowserMicroSentryClient({
+        maxBreadcrumbs: -100,
+      });
+
+      anotherClient.setBreadcrumbs(getBreadcrumbs(MAX_BREADCRUMBS + 2));
 
       expect(anotherClient.state.breadcrumbs?.length).toBe(MAX_BREADCRUMBS);
     });

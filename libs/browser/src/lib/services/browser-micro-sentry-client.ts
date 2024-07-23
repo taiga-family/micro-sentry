@@ -140,18 +140,12 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
       ],
     });
 
-    const breadcrumbs = this.getKeyState(this.breadcrumbsKeyName);
-
-    if (!!breadcrumbs && (breadcrumbs.length ?? 0) > this.maxBreadcrumbs) {
-      this.setKeyState(
-        this.breadcrumbsKeyName,
-        this.maxBreadcrumbs > 0 ? breadcrumbs.slice(-this.maxBreadcrumbs) : []
-      );
-    }
+    this.trimBreadcrumbs();
   }
 
   setBreadcrumbs(breadcrumbs: Breadcrumb[] | undefined) {
-    this.setKeyState('breadcrumbs', breadcrumbs);
+    this.setKeyState(this.breadcrumbsKeyName, breadcrumbs);
+    this.trimBreadcrumbs();
   }
 
   captureMessage(message: string, level?: Severity) {
@@ -325,5 +319,15 @@ export class BrowserMicroSentryClient extends MicroSentryClient {
 
   private getKeyState<T extends keyof State>(key: T): State[T] {
     return this._state[key];
+  }
+
+  private trimBreadcrumbs(): void {
+    const breadcrumbs = this.getKeyState(this.breadcrumbsKeyName);
+    if (breadcrumbs && (breadcrumbs.length ?? 0) > this.maxBreadcrumbs) {
+      this.setKeyState(
+        this.breadcrumbsKeyName,
+        this.maxBreadcrumbs > 0 ? breadcrumbs.slice(-this.maxBreadcrumbs) : []
+      );
+    }
   }
 }
