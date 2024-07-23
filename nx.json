@@ -30,20 +30,6 @@
       }
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ],
-    "release": [
-      {
-        "target": "release",
-        "projects": "dependencies"
-      }
-    ]
-  },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
@@ -64,7 +50,11 @@
   "targetDefaults": {
     "build": {
       "inputs": ["production", "^production"],
+      "dependsOn": ["^build"],
       "cache": true
+    },
+    "release": {
+      "dependsOn": ["^release"]
     },
     "lint": {
       "cache": true
