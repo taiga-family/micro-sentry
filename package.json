@@ -59,7 +59,7 @@
     "@angular-eslint/template-parser": "17.0.1",
     "@angular/cli": "~17.0.0",
     "@angular/compiler-cli": "17.0.2",
-    "@commitlint/config-conventional": "18.4.0",
+    "@commitlint/config-conventional": "18.6.3",
     "@ng-builders/semrel": "1.5.0",
     "@nx/angular": "17.1.2",
     "@nx/eslint": "17.1.2",
