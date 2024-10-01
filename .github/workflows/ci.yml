@@ -1,0 +1,22 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.0
+        with:
+          persist-credentials: false
+      - uses: taiga-family/ci/actions/setup/node@v1.89.0
+
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
