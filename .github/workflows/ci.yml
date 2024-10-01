@@ -13,9 +13,9 @@ jobs:
           persist-credentials: false
       - uses: taiga-family/ci/actions/setup/node@v1.89.0
 
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
+      - run: npx nx run-many -t lint
+      - run: npx nx run-many -t build
+      - run: npx nx run-many -t test
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
