@@ -2,7 +2,7 @@
   "name": "@micro-sentry/core",
   "version": "0.0.0-development",
   "dependencies": {
-    "tslib": "2.6.3"
+    "tslib": "2.8.1"
   },
   "license": "Apache-2.0",
   "keywords": [
