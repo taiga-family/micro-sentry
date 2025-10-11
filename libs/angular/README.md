@@ -31,16 +31,15 @@ npm i @micro-sentry/browser
 Just add it into `app.module.ts` of your application:
 
 ```typescript
-import { MicroSentryModule } from '@micro-sentry/angular';
+import { provideMicroSentry } from '@micro-sentry/angular';
 
-@NgModule({
-  imports: [
-    MicroSentryModule.forRoot({
+bootstrapApplication(App, {
+  providers: [
+    provideMicroSentry({
       dsn: 'https://kj12kj1n23@sentry.domain.com/123',
     }),
   ],
-})
-export class AppModule {}
+});
 ```
 
 ### Javascript / Typescript
@@ -57,6 +56,29 @@ try {
 } catch (e) {
   client.report(e);
 }
+```
+
+## How to extend request params
+
+You can use `beforeSend` and `beforeBreadcrumb` hooks to extend request params.
+These hooks are executed in injection context, so you can inject any service into them.
+
+```typescript
+import { provideMicroSentry } from '@micro-sentry/angular';
+
+bootstrapApplication(App, {
+  providers: [
+    provideMicroSentry({
+      dsn: 'https://kj12kj1n23@sentry.domain.com/123',
+      beforeSend: (request) => {
+        request.user ??= {};
+        request.user.id ??= inject(UserStore).user().id;
+
+        return request;
+      },
+    }),
+  ],
+});
 ```
 
 ## Core team
