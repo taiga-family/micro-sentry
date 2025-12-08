@@ -135,9 +135,12 @@ export class BreadcrumbsPlugin implements MicroSentryPlugin {
       });
 
       if (oldOnPopState) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return oldOnPopState.apply(this, args);
+        try {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return oldOnPopState.apply(this, args);
+        }
+        catch (_) { /* empty */ }
       }
     };
 
