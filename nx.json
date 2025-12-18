@@ -32,7 +32,10 @@
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "sharedGlobals": [
       "{workspaceRoot}/angular.json",
       "{workspaceRoot}/tsconfig.base.json",
@@ -49,19 +52,30 @@
   },
   "targetDefaults": {
     "build": {
-      "inputs": ["production", "^production"],
-      "dependsOn": ["^build"],
+      "inputs": [
+        "production",
+        "^production"
+      ],
+      "dependsOn": [
+        "^build"
+      ],
       "cache": true
     },
     "release": {
-      "dependsOn": ["^release"]
+      "dependsOn": [
+        "^release"
+      ]
     },
     "lint": {
       "cache": true
     },
     "@nx/jest:jest": {
       "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "options": {
         "passWithNoTests": true
       },
