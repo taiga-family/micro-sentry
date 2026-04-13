@@ -15,6 +15,7 @@ jobs:
         with:
           audit: true
 
+      - run: npm run prettier -- --check
       - run: npx nx run-many -t lint
       - run: npx nx run-many -t build
       - run: npx nx run-many -t test

@@ -139,8 +139,9 @@ export class BreadcrumbsPlugin implements MicroSentryPlugin {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           return oldOnPopState.apply(this, args);
+        } catch (_) {
+          /* empty */
         }
-        catch (_) { /* empty */ }
       }
     };
 
