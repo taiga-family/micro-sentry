@@ -10,8 +10,8 @@ jobs:
     if: github.event.review.state == 'approved'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: taiga-family/actions/setup-variables@ab5a9c7e8a57e7afcea80c4f7210ce57de3c109e # v2.13.0
-      - uses: taiga-family/actions/auto-label-when-approved@ab5a9c7e8a57e7afcea80c4f7210ce57de3c109e # v2.13.0
+      - uses: taiga-family/actions/setup-variables@ed4e7ce7c012436a5f2b02d2b5a7aa86581db73a # v2.14.0
+      - uses: taiga-family/actions/auto-label-when-approved@ed4e7ce7c012436a5f2b02d2b5a7aa86581db73a # v2.14.0
         with:
           approvals: 1
           token: ${{ secrets.GITHUB_TOKEN }}
